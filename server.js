@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
-const app = express()
+const app = express();
+const port = process.env.PORT || 8080;
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,7 +20,7 @@ app.post('/', function (req, res) {
     if(err){
       res.render('index', {weather: null, error: 'Error, please try again'});
     } else {
-      let weather = JSON.parse(body)
+      let weather = JSON.parse(body);
       // console.log(weather.query.results.channel.item);
       if(weather.query.results.channel.item.condition.temp == undefined){
         res.render('index', {weather: null, error: 'Error, please try again'});
@@ -31,6 +32,6 @@ app.post('/', function (req, res) {
   });
 })
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
-})
+app.listen(port, function () {
+  console.log('listening on *:'+ port);
+  });
